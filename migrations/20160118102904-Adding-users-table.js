@@ -29,10 +29,12 @@ exports.up = function(db, callback) {
 	    },
 	    username : {
 	  		type : "string",
+	  		unique : true,
 		  	notNull : true
 	  	},
 	  	email : {
 	  		type : "string",
+	  		unique : true,
 		  	notNull : true
 	  	},
 	  	password : {
