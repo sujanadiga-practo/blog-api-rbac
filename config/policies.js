@@ -30,24 +30,16 @@ module.exports.policies = {
    'BlogController' : {
      'index' : true,
      'create' : 'isAuthenticated',
-     'new' : 'isAuthenticated',
-     'edit' : 'isBlogOwner',
-     'update' : 'isBlogOwner',
-     'delete' : 'isBlogOwner'
+     'update' : ['isAuthenticated', 'isBlogOwner'],
+     'destroy' : ['isAuthenticated', 'isBlogOwner']
    },
    'CommentController' : {
      'create' : 'isAuthenticated',
-     'delete' : 'isCommentOwner'
+     'delete' : ['isAuthenticated', 'isCommentOwner']
    },
    'UserController' : {
-    'update' : 'isOwner',
-    'edit' : 'isOwner',
-    'changePassword' : 'isOwner',
-    'router' : 'isAllowedLogin'
+    'update' : ['isAuthenticated', 'isOwner']
     },
-    'AuthenticationController' : {
-      'login' : 'isAllowedLogin'
-    }
 
   /***************************************************************************
   *                                                                          *

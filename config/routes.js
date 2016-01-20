@@ -32,68 +32,34 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    controller : 'Blog',
-    action : 'index'
-  },
+  '/' : 'Blog.find',
 
-  'post /user/create' : {
-    controller : 'User',
-    action : 'create'
-  },
+  'post /users' : 'User.create',
 
-  'post /user/login' :{
-    controller : 'Authentication',
-    action : 'login'
-  },
+  'get /users/:id?' : 'User.find',
 
-  'get /user/logout' :{
-    controller : 'Authentication',
-    action : 'logout'
-  },
+  'put /users/:id' : 'User.update',
+
+  'delete /users/:id' : 'User.destroy',
+ 
+  'post /blogs' : 'Blog.create',
+
+  'get /blogs/:id?' : 'Blog.find',
+
+  'put /blogs/:id' : 'Blog.update',
+
+  'delete /blogs/:id' : 'Blog.destroy',
+
+  'post /comments' : 'Comment.create',
+
+  'get /comments/:id?' : 'Comment.find',
+
+  'delete /comments/:id' : 'Comment.destroy',
+
+  'post /login' : 'Authentication.login',
+
+  'get /logout' : 'Authentication.logout',
   
-  'get /user/login' : 'User.router',
-  
-  'get /user/signup' : 'User.router',
-  
-  'get /user/:id' : 'User.show',
-
-  'get /user/edit/:id' : 'User.edit',
-
-  'get /user/changePassword/:id' : 'User.changePassword',
-
-  'put /user/:id' : 'User.update',
-
-  'get /blog/new' :{
-    controller : 'Blog',
-    action : 'new'
-  },
-
-  'post /blog/create' :{
-    controller : 'Blog',
-    action : 'create' 
-  },
-
-  'get /blog/:id' : {
-    controller : 'Blog',
-    action : 'show'
-  },
-  
-  'put /blog/:id' : 'Blog.update',
-
-  'get /blog/edit/:id' : 'Blog.edit',
-
-  'delete /blog/:id' : 'Blog.delete',
-
-  'get /user/:id/blogs' :{
-    controller : 'User',
-    action : 'listBlogs'
-  },
-
-  'post /comment/create' : 'Comment.create',
-
-  'delete /comment/:id' : 'Comment.delete',
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

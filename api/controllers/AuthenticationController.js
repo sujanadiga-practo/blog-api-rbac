@@ -9,40 +9,31 @@ var passport = require('passport');
 
 module.exports = {
 	login : function(req, res){
-		console.log("Authentication in progress")
+        sails.log.debug("Server side Authentication in progress")
 	 	passport.authenticate('local', function(err, user, info) {
             if ((err) || (!user)) {
-            	var msg = "<em>" + info.message + "</em>";
-                res.view("user/login", {
-                	info : msg
-                });
+                return res.json(responseHandler.sendResponseJSON("error", info.message || "Authentication failure."));   
             }
             else{
+                sails.log.debug("Authentication successful")
            		req.logIn(user, function(err) {
-	                if (err) res.send(err);
-
-                    console.log("Authentication successful..")
-                    req.flash("message", "Welcome " + req.user.name);
-                    req.flash("type", "success");
-                    console.log(req.get("referer"))
-                    //res.redirect(req.get("referer"));    
-                    res.redirect("/");
+                    if (err){
+                        return res.json(responseHandler.sendResponseJSON("error", "Log in failed."));   
+                    }
+                    else{
+                        return res.json(responseHandler.sendResponseJSON("success", "Log in successful.", {
+                            user : user,
+                            token : jwToken.issueToken({id : user.id})
+                        }));   
+                    }
 	            });
- 	
             }
            
         })(req, res);
     },
 	logout : function(req, res){
-        if(req.user){
-            req.logout();
-            req.flash("message", "You have successfully Logged out. Bye");
-            req.flash("type", "success");
-            res.redirect(req.get('referer'));    
-        }
-        else{
-            res.redirect('/');   
-        }        
+        req.logout();
+        return res.json(responseHandler.sendResponseJSON("success", "You have successfully logged out."));
     }
 };
 

@@ -5,94 +5,89 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+
 module.exports = {
-	index : function (req, res){
-		Blog.find().populate("author").exec(function (err, blogs){
-			res.view({
-				blogs : blogs
-			});
-		});
-	},
-	new : function (req, res){
-		res.view();
-	},
-	create : function(req, res){
-		var data = req.body;
-		data.content = data.content.replace(/\r?\n/g, "<br />");
-		Blog.create(data).exec(function(err, blog){
-			if(!err){
-				req.flash("message", "Blog posted successfully.");
-				req.flash("type", "success");
-				res.redirect("blog/" + blog.id);
-			}
-		});
-	},
-	show : function (req, res) {
-		var id = req.param('id');
-		Blog.find({id : id}).populate("author").exec(function (err, blogs){
-			Comment.find({blog: blogs[0].id}).populate("user").exec(function (err, comments) {
-				res.view({
-					blog : blogs[0],
-					comments : comments
-				});
-			})
-		});
-	},
-	update : function(req, res){
-		console.log("Updating blog");
+	 _config: {
+        actions: false,
+        shortcuts: false,
+        rest: false
+    },
+	create : function(req, res) {
+		console.log("In create blog")
 		var params = req.body;
 		params.content = params.content.replace(/\r?\n/g, "<br />");
-		Blog.update({id : params.id, author : params.author}, params).exec(function(err, blog){
-			if(err){
-				res.send({
-					status : "error",
-					data : null,
-					message : err
-				});
+
+		Blog.create(params).exec(function(err, blog){
+			if(err) {
+				return res.json(responseHandler.sendResponseJSON("error", "Could not create new blog."));
 			}
 			else{
-				res.send({
-					status : "success",
-					data : null,
-					message : "Successfully updated blog"
-				})
-			}
-		});
-	},
-	edit : function(req, res){
-		Blog.find({id : req.param('id')}).exec(function(err, blogs){
-			if(!err && blogs.length > 0){
-				var blog = blogs[0];
-				blog.content = blog.content.replace(/<br \/?>/gi, "\r\n");
-
-				res.view({
+				return res.json(responseHandler.sendResponseJSON("success", "Successfully created a new blog.", {
 					blog : blog
-				});
+				}));
 			}
 		});
 	},
-	delete : function(req, res){
+	find : function (req, res) {
+		var id = req.param('id');
+		if(id){
+			Blog.findOne({id : id}).populate("author").exec(function (err, blog) {
+				if(err || !blog) {
+					return res.json(responseHandler.sendResponseJSON("error", "Could not find the requested blog."));
+				} 
+				else {
+					Comment.find({blog : blog.id}).populate("user").exec(function (err, comments) {
+						return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved the requested blog.", {
+							blog : blog, 
+							comments : comments 
+						}));
+					})
+				}
+			});
+		}
+		else {
+			Blog.find().populate("author").exec(function (err, blogs){
+				if(err){
+					return res.json(responseHandler.sendResponseJSON("error", "Could not retrieve blogs."));
+				}
+				else{
+					return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved all blogs.", {
+						blogs : blogs
+					}));
+				}
+			});
+			
+		}
+	},
+	update : function(req, res) {
+		var params = req.body;
+		params.content = params.content.replace(/\r?\n/g, "<br />");
+
+		Blog.update({id : params.id, author : params.author}, params).exec(function(err, blog){
+			if(err){
+				return res.json(responseHandler.sendResponseJSON("error", "Could not update the blog. Some error occurred."));
+			}
+			else{
+				return res.json(responseHandler.sendResponseJSON("success", "Successfully updated blog.", {
+					blog : blog
+				}));
+			}
+		});
+	},
+	destroy : function(req, res) {
 		var id = req.param('id');
 		Blog.destroy({id : id}).exec(function(err, blogs){
 			if(err){
-				res.send({
-					status : "error",
-					data : null,
-					message : err
-				});
+				return res.json(responseHandler.sendResponseJSON("error", "Could not delete blog. Some error occurred."));
 			}
 			else{
-				console.log("Blog deleted")
-				console.log(blogs)
-				Comment.destroy({blog: blogs[0].id }).exec(function(err, comments){
-					console.log(comments)
-					res.send({
-						status : "success",
-						data : null,
-						message : "Successfully deleted blog"
-					})
+				var blog = blogs[0];
+				Comment.destroy({blog: blog.id }).exec(function(err, comments){
+					return res.json(responseHandler.sendResponseJSON("success", "Successfully deleted blog and its comments.", {
+						blog : blog,
+						comments : comments
+					}));
 				});
-				
 			}
 		});
 	}
