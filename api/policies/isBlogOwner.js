@@ -1,7 +1,10 @@
 module.exports = function(req, res, next){
 
+	if(req.user && req.user.role == "admin"){
+		return next();
+	}
 	Blog.findOne({ id : req.param("id") }).exec(function(err, blog){
-		if(blog && blog.author == req.token.id){
+		if(blog && blog.author == req.user.id){
 			return next();
 		}
 		else{

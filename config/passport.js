@@ -34,6 +34,8 @@ passport.use(new LocalStrategy(
           name : user.name,
       		username : user.username,
       		email : user.email,
+          role : user.role,
+          tagMaintained : user.tagMaintained,
       		id : user.id
       	};
       	return done(null, ret, { 

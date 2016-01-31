@@ -19,6 +19,10 @@ module.exports = {
       model : "user",
       columnName : "authorId",
       required : true
+    },
+    tags : {
+      collection : 'tag',
+      via : 'blogs'
     }
   },
   tableName : 'blogs'

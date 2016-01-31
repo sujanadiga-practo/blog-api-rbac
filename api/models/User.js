@@ -7,7 +7,7 @@
 var bcrypt = require("bcrypt");
 module.exports = {
   types : {
-   single_word : function(username){
+    single_word : function(username){
       return username.indexOf(' ') < 0;
     }
   },
@@ -22,11 +22,21 @@ module.exports = {
       unique : true,
       single_word : true
   	},
+    role : {
+      type : "string",
+      enum : ['admin', 'user', 'tagModerator', 'commentModerator', 'reporter'],
+      required :true
+    },
   	email : {
   		type : "email",
   		required : true,
   		unique : true
   	},
+    tagMaintained : {
+      model : "tag",
+      required : this.role == "tagModerator",
+      columnName : "tagId"
+    },
   	password : {
   		type : "string",
   		required : true
@@ -38,7 +48,7 @@ module.exports = {
   	}
   },
   beforeCreate : function (user, callback) {
-  	bcrypt.genSalt(10, function(err, salt){
+    bcrypt.genSalt(10, function(err, salt){
   		console.log("encrypting")
   		bcrypt.hash(user.password, salt, function(err, hash){
   			if(err){

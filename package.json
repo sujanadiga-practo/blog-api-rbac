@@ -1,5 +1,5 @@
 {
-  "name": "blog-api",
+  "name": "blog-api-rbac",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -30,6 +30,7 @@
     "mysql": "^2.10.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "rbac": "^3.1.2",
     "rc": "~0.5.0",
     "sails": "~0.11.4",
     "sails-db-migrate": "^1.2.0",
@@ -43,7 +44,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/sujan/blog-api.git"
+    "url": "git://github.com/sujan/blog-api-rbac.git"
   },
   "author": "sujan",
   "license": ""

@@ -36,25 +36,39 @@ module.exports.routes = {
 
   'post /users' : 'User.create',
 
-  'get /users/:id?' : 'User.find',
+  'get /users/:id' : 'User.find',
+
+  'get /users' : 'User.index',
 
   'put /users/:id' : 'User.update',
 
-  'delete /users/:id' : 'User.destroy',
+  'delete /users/:id' : 'User.delete',
  
   'post /blogs' : 'Blog.create',
 
-  'get /blogs/:id?' : 'Blog.find',
+  'get /blogs/:id' : 'Blog.find',
+
+  'get /blogs' : 'Blog.index',
 
   'put /blogs/:id' : 'Blog.update',
 
-  'delete /blogs/:id' : 'Blog.destroy',
+  'delete /blogs/:id' : 'Blog.delete',
 
   'post /comments' : 'Comment.create',
 
-  'get /comments/:id?' : 'Comment.find',
+  'get /comments' : 'Comment.index',
 
-  'delete /comments/:id' : 'Comment.destroy',
+  'get /comments/:id' : 'Comment.find',
+
+  'delete /comments/:id' : 'Comment.delete',
+
+  'post /tags' : 'Tag.create',
+
+  'get /tags' : 'Tag.index',
+
+  'get /tags/:id' : 'Tag.find',
+
+  'delete /tags/:id' : 'Tag.delete',
 
   'post /login' : 'Authentication.login',
 

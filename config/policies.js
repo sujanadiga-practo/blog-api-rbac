@@ -26,20 +26,15 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-   '*': true,
-   'BlogController' : {
-     'index' : true,
-     'create' : 'isAuthenticated',
-     'update' : ['isAuthenticated', 'isBlogOwner'],
-     'destroy' : ['isAuthenticated', 'isBlogOwner']
-   },
-   'CommentController' : {
-     'create' : 'isAuthenticated',
-     'delete' : ['isAuthenticated', 'isCommentOwner']
-   },
-   'UserController' : {
-    'update' : ['isAuthenticated', 'isOwner']
-    },
+    '*' : ['parseToken', 'isAllowed'],
+   
+  'BlogController' : {
+   'update' : ['parseToken', 'isAllowed', 'isBlogOwner'],
+   'destroy' : ['parseToken', 'isAllowed', 'isBlogOwner']
+  },
+  'CommentController' : {
+   'delete' : ['parseToken', 'isAllowed', 'isCommentOwner']
+  },
 
   /***************************************************************************
   *                                                                          *

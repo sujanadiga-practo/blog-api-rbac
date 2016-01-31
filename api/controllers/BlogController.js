@@ -15,6 +15,7 @@ module.exports = {
 	create : function(req, res) {
 		console.log("In create blog")
 		var params = req.body;
+		console.log(params)
 		params.content = params.content.replace(/\r?\n/g, "<br />");
 
 		Blog.create(params).exec(function(err, blog){
@@ -28,40 +29,39 @@ module.exports = {
 			}
 		});
 	},
+	index : function (req, res){
+		Blog.find().populateAll().exec(function (err, blogs){
+			if(err){
+				return res.json(responseHandler.sendResponseJSON("error", "Could not retrieve blogs."));
+			}
+			else{
+				return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved all blogs.", {
+					blogs : blogs
+				}));
+			}
+		});
+	},
 	find : function (req, res) {
 		var id = req.param('id');
-		if(id){
-			Blog.findOne({id : id}).populate("author").exec(function (err, blog) {
-				if(err || !blog) {
-					return res.json(responseHandler.sendResponseJSON("error", "Could not find the requested blog."));
-				} 
-				else {
-					Comment.find({blog : blog.id}).populate("user").exec(function (err, comments) {
-						return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved the requested blog.", {
-							blog : blog, 
-							comments : comments 
-						}));
-					})
-				}
-			});
-		}
-		else {
-			Blog.find().populate("author").exec(function (err, blogs){
-				if(err){
-					return res.json(responseHandler.sendResponseJSON("error", "Could not retrieve blogs."));
-				}
-				else{
-					return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved all blogs.", {
-						blogs : blogs
+		
+		Blog.findOne({id : id}).populateAll().exec(function (err, blog) {
+			if(err || !blog) {
+				return res.json(responseHandler.sendResponseJSON("error", "Could not find the requested blog."));
+			} 
+			else {
+				Comment.find({blog : blog.id}).populate("user").exec(function (err, comments) {
+					return res.json(responseHandler.sendResponseJSON("success", "Successfully retrieved the requested blog.", {
+						blog : blog, 
+						comments : comments 
 					}));
-				}
-			});
-			
-		}
+				})
+			}
+		});
 	},
 	update : function(req, res) {
 		var params = req.body;
 		params.content = params.content.replace(/\r?\n/g, "<br />");
+		console.log(params)
 
 		Blog.update({id : params.id, author : params.author}, params).exec(function(err, blog){
 			if(err){
@@ -74,7 +74,7 @@ module.exports = {
 			}
 		});
 	},
-	destroy : function(req, res) {
+	delete : function(req, res) {
 		var id = req.param('id');
 		Blog.destroy({id : id}).exec(function(err, blogs){
 			if(err){
