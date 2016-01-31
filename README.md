@@ -16,7 +16,7 @@ Below are the steps you need to follow for installation:
 
 ```sh
 $ git clone https://github.com/sujanadiga-practo/blog-api-rbac.git
-$ cd blog-api
+$ cd blog-api-rbac
 $ sudo npm install
 ```
 
