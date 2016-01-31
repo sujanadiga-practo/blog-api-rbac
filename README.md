@@ -41,4 +41,4 @@ Blog-API is a sails app that runs of port 1338, so you can access the applicatio
 * [passport](http://passportjs.org/) - authentication middleware for Node.js
 * [bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing
 * [sails-db-migrate](https://github.com/building5/sails-db-migrate) - db-migrate integration for your sails app
-* [sails-hook-autoreload](https://github.com/sgress454/sails-hook-autoreload) - Sails JS hook to autoreload controllers, models and locales when changed.
+* [rbac](https://github.com/sujanadiga-practo/blog-api-rbac) - Hierarchical Role Based Access Control
