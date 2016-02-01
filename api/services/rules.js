@@ -19,7 +19,7 @@ module.exports = {
 			administrative : ['index_blog', 'index_user', 'index_tag', 'index_comment'],
 			guest : ['index_blog', 'index_tag', 'find_blog', 'find_comment', 'login_authentication', 'create_user'],
 			reporter: ['administrative', 'generate_report'],
-			tagModerator: ['administrative'],
+			tagModerator: ['administrative', 'find_blog'],
 			commentModerator: ['index_comment', 'delete_comment'],
 			user: ['guest', 'find_tag', 'update_user', 'create_blog', 'update_blog', 'delete_blog', 'create_comment', 'delete_comment', 'find_tag'],
 			admin: ['user', 'administrative', 'find_user', 'delete_user', 'update_user', 'create_tag', 'delete_tag']
