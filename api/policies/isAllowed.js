@@ -20,12 +20,10 @@ module.exports = function(req, res, next){
 		rbac.can(role, action, controller, function (err, allowed){
 			console.log(err, allowed)
 			if(allowed){
-				// Some restrictions
-				// No user other than Admin can list all Users
-				if(!(role != "admin" && !req.param("id") && controller == "user" && action == "find")){
-					return next();
+				// If any tag moderator is trying to see other tags
+				if(role == "tagModerator" && controller == "tag" && action == "find" && req.param("id") != user.tagMaintained.id){
 				}
-				if(role == "tagModerator" && controller == "tag" && action == "find" && req.param("id") == user.tagMaintained.id){
+				else{
 					return next();
 				}
 			}
