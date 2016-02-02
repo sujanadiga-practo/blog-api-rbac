@@ -20,7 +20,7 @@ module.exports = {
 	},
 	find : function (req, res) {
 		var id = req.param('id');
-		Tag.findOne({id : id}).exec(function (err, tag) {
+		Tag.findOne({id : id}).populateAll().exec(function (err, tag) {
 			if(err || !tag) {
 				return res.json(responseHandler.sendResponseJSON("error", "Could not find the requested tag."));
 			} 

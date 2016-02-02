@@ -25,6 +25,9 @@ module.exports = function(req, res, next){
 				if(!(role != "admin" && !req.param("id") && controller == "user" && action == "find")){
 					return next();
 				}
+				if(role == "tagModerator" && controller == "tag" && action == "find" && req.param("id") == user.tagMaintained.id){
+					return next();
+				}
 			}
 			else{
 				// Some passes,
