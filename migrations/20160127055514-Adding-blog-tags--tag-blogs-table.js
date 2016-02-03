@@ -15,27 +15,27 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-	db.createTable("blog_tags__tag_blogs", {
-		id : {
-			type : "int",
-			primaryKey : true,
-			autoIncrement : true,
-			unsigned : true,
-			notNull : true
-		},
-	  	blog_tags : {
-	  		type : "int",
-			unsigned : true,
-			notNull : true
-	  	},
-		tag_blogs : {
-	  		type : "int",
-			unsigned : true,
-			notNull : true
-	  	}
-	}, callback);
+  db.createTable("blog_tags__tag_blogs", {
+    id : {
+      type : "int",
+      primaryKey : true,
+      autoIncrement : true,
+      unsigned : true,
+      notNull : true
+    },
+      blog_tags : {
+        type : "int",
+      unsigned : true,
+      notNull : true
+      },
+    tag_blogs : {
+        type : "int",
+      unsigned : true,
+      notNull : true
+      }
+  }, callback);
 };
 
 exports.down = function(db, callback) {
-	db.dropTable("blog_tags__tag_blogs", callback);	
+  db.dropTable("blog_tags__tag_blogs", callback); 
 };

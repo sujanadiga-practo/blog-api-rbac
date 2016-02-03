@@ -13,26 +13,6 @@ module.exports.bootstrap = function(cb) {
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  /*
-  acl = require("acl");
-  acl = new acl(new acl.memoryBackend());
-
-  acl.allow('admin', 'user', 'find');
-  acl.allow('admin', 'user', 'index');
-  acl.allow('admin', 'user', 'delete');
-  */
-  // rbac = new RBAC(sails.config.connections.MySQLDb);
-  // // rbac = new RBAC();
   
-  // var roles = [];
-  // var permissions = [];
-
-  // rbac.create(roles, permissions, function(err, response) {
-  //   if(err) {
-  //       throw err; //process error
-  //   }
-
-  // });
-    
-    rules.init(cb);
+  rules.init(cb);
 };

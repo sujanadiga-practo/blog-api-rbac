@@ -15,11 +15,11 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-	db.addColumn("users", "role", {
-			type : 'string',
-			notNull : true
-		}, callback);
+  db.addColumn("users", "role", {
+      type : 'string',
+      notNull : true
+    }, callback);
 };
 exports.down = function(db, callback) {
-	db.removeColumn("users", "role", callback);
+  db.removeColumn("users", "role", callback);
 };

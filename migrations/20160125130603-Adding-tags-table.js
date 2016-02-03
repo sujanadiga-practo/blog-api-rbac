@@ -15,27 +15,27 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-	db.createTable("tags", {
-		id : {
-			type : "int",
-			primaryKey : true,
-			autoIncrement : true,
-			unsigned : true,
-			notNull : true
-		},
-	  	tag : {
-	  		type : "string",
-			notNull : true,
-	  	},
-		description : {
-	  		type : "text"
-	  	},
-	    createdAt : "datetime",
-	    updatedAt : "datetime"
-	    
-	}, callback);
+  db.createTable("tags", {
+    id : {
+      type : "int",
+      primaryKey : true,
+      autoIncrement : true,
+      unsigned : true,
+      notNull : true
+    },
+      tag : {
+        type : "string",
+      notNull : true,
+      },
+    description : {
+        type : "text"
+      },
+      createdAt : "datetime",
+      updatedAt : "datetime"
+      
+  }, callback);
 };
 
 exports.down = function(db, callback) {
-	db.dropTable("tags", callback);	
+  db.dropTable("tags", callback); 
 };

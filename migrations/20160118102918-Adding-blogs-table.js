@@ -15,35 +15,35 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-	async.series([
-		db.createTable.bind(db, "blogs", {
-			id : {
-				type : "int",
-				primaryKey : true,
-				autoIncrement : true,
-				unsigned : true,
-				notNull : true
-			},
-			title : {
-		  		type : "string",
-			  	notNull : true
-		  	},
-		  	content : {
-		  		type : "text",
-			  	notNull : true
-		  	},
-		    authorId : {
-		 	    type : "int",
-				unsigned : true,
-				notNull : true
-		    },
-		    createdAt : "datetime",
-		    updatedAt : "datetime"
-		}),
-		db.addIndex.bind(db, "blogs", "indexBlogsOnAuthor", "authorId")
-	], callback);
+  async.series([
+    db.createTable.bind(db, "blogs", {
+      id : {
+        type : "int",
+        primaryKey : true,
+        autoIncrement : true,
+        unsigned : true,
+        notNull : true
+      },
+      title : {
+          type : "string",
+          notNull : true
+        },
+        content : {
+          type : "text",
+          notNull : true
+        },
+        authorId : {
+          type : "int",
+        unsigned : true,
+        notNull : true
+        },
+        createdAt : "datetime",
+        updatedAt : "datetime"
+    }),
+    db.addIndex.bind(db, "blogs", "indexBlogsOnAuthor", "authorId")
+  ], callback);
 };
 
 exports.down = function(db, callback) {
-	db.dropTable("blogs", callback);	
+  db.dropTable("blogs", callback);  
 };

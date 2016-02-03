@@ -14,11 +14,11 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 exports.up = function(db, callback) {
-	db.addColumn("users", "tagId", {
-			type : 'int',
-			unsigned : true,
-		}, callback);
+  db.addColumn("users", "tagId", {
+      type : 'int',
+      unsigned : true,
+    }, callback);
 };
 exports.down = function(db, callback) {
-	db.removeColumn("users", "tagId", callback);
+  db.removeColumn("users", "tagId", callback);
 };
